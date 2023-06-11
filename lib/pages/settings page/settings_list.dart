@@ -1,4 +1,5 @@
 import 'package:chatapp/pages/profile%20page/profile_page.dart';
+import 'package:chatapp/pages/starred_massage_page.dart';
 import 'package:chatapp/shared/local_parameters.dart';
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
@@ -20,9 +21,14 @@ class SettingsList extends StatelessWidget {
             }));
           },
         ),
-        const ListTile(
-          leading: Icon(Icons.lock),
-          title: Text("Privacy"),
+        ListTile(
+          leading: const Icon(Icons.star),
+          title: const Text("Starred Messages"),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return const StarredMessagePage();
+            }));
+          },
         ),
         const ListTile(
           leading: Icon(Icons.message),

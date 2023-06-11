@@ -1,5 +1,7 @@
+import 'package:chatapp/model/weather.dart';
 import 'package:chatapp/pages/group_tile.dart';
 import 'package:chatapp/services/database_service.dart';
+import 'package:chatapp/services/weather_service.dart';
 import 'package:chatapp/shared/local_parameters.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +22,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  WeatherService weatherService = WeatherService();
+  Weather weather = Weather();
+
   String userName = "";
   String number = "";
   String email = "";
@@ -30,11 +35,22 @@ class _HomePageState extends State<HomePage> {
   Stream<QuerySnapshot>? chats;
   Size get preferredSize => const Size.fromHeight(60);
   SampleItem? selectedMenu;
+  String weatherC = "";
+  String weatherIcon = "https://cdn.weatherapi.com/weather/64x64/day/113.png";
 
   @override
   void initState() {
     super.initState();
     gettingUserData();
+    getWeather();
+  }
+
+  void getWeather() async {
+    weather = await weatherService.getWeatherData("Ankara");
+    setState(() {
+      weatherC = weather.temperatureC.toString();
+      weatherIcon = "https:${weather.condition}";
+    });
   }
 
   // string manipulation
@@ -79,6 +95,24 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Parameters().appbar_BColor,
         title: const Text("n'Apptın"),
         actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              children: [
+                Text("Ankara"),
+                Row(
+                  children: [
+                    Image.network(
+                      weatherIcon,
+                      width: 30,
+                      height: 30,
+                    ),
+                    Text(" $weatherC"),
+                  ],
+                )
+              ],
+            ),
+          ),
           IconButton(
               onPressed: () {
                 Navigator.push(
@@ -219,11 +253,11 @@ class _HomePageState extends State<HomePage> {
                   },
                 );
               } else {
-                return Center(
+                return const Center(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     SizedBox(
                       child: Text(
                         "Looking you are not chatting with anyone.\nLets start a new chat!",
@@ -234,11 +268,11 @@ class _HomePageState extends State<HomePage> {
                 ));
               }
             } else {
-              return Center(
+              return const Center(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
+                children: [
                   SizedBox(
                     child: Text(
                       "Looking you are not chatting with anyone.\nLets start a new chat!",

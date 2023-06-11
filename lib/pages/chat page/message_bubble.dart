@@ -1,8 +1,9 @@
+import 'package:chatapp/services/file_utils.dart';
 import 'package:chatapp/shared/local_parameters.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-
 import 'package:intl/intl.dart';
+import '../snack_bar.dart';
 
 class MessageBubble extends StatefulWidget {
   const MessageBubble({
@@ -94,55 +95,80 @@ class _MessageBubbleState extends State<MessageBubble> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                widget.message,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: widget.sentByMe ? Colors.white : Colors.black87),
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.fromLTRB(8, 2, 12, 12),
+            GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
                 child: Text(
-                  readTimestamp(widget.time),
-                  style: TextStyle(
-                      fontSize: 10,
+                  widget.message,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: widget.sentByMe ? Colors.white : Colors.black87),
-                ))
+                ),
+              ),
+              onDoubleTap: () {
+                starMessage(widget.message, context);
+              },
+            ),
+            GestureDetector(
+              child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 2, 12, 12),
+                  child: Text(
+                    readTimestamp(widget.time),
+                    style: TextStyle(
+                        fontSize: 10,
+                        color: widget.sentByMe ? Colors.white : Colors.black87),
+                  )),
+              onDoubleTap: () {
+                starMessage(widget.message, context);
+              },
+            )
           ],
         );
       } else {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 5, 5, 5),
-              child: Text(
-                widget.sender.toLowerCase(),
-                textAlign: TextAlign.start,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: color),
+            GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 5, 5, 5),
+                child: Text(
+                  widget.sender.toLowerCase(),
+                  textAlign: TextAlign.start,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: color),
+                ),
               ),
+              onDoubleTap: () {
+                starMessage(widget.message, context);
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 5, 5, 5),
-              child: Text(
-                widget.message,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: widget.sentByMe ? Colors.white : Colors.black87),
+            GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 5, 5, 5),
+                child: Text(
+                  widget.message,
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: widget.sentByMe ? Colors.white : Colors.black87),
+                ),
               ),
+              onDoubleTap: () {
+                starMessage(widget.message, context);
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 2, 12, 12),
-              child: Text(
-                readTimestamp(widget.time),
-                style: TextStyle(
-                    fontSize: 10,
-                    color: widget.sentByMe ? Colors.white : Colors.black87),
+            GestureDetector(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8, 2, 12, 12),
+                child: Text(
+                  readTimestamp(widget.time),
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: widget.sentByMe ? Colors.white : Colors.black87),
+                ),
               ),
+              onDoubleTap: () {
+                starMessage(widget.message, context);
+              },
             ),
           ],
         );
@@ -151,22 +177,32 @@ class _MessageBubbleState extends State<MessageBubble> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Text(
-              widget.message,
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: widget.sentByMe ? Colors.white : Colors.black87),
+          GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Text(
+                widget.message,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    color: widget.sentByMe ? Colors.white : Colors.black87),
+              ),
             ),
+            onDoubleTap: () {
+              starMessage(widget.message, context);
+            },
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8, 2, 12, 12),
-            child: Text(
-              readTimestamp(widget.time),
-              style: TextStyle(
-                  fontSize: 10,
-                  color: widget.sentByMe ? Colors.white : Colors.black87),
+          GestureDetector(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 2, 12, 12),
+              child: Text(
+                readTimestamp(widget.time),
+                style: TextStyle(
+                    fontSize: 10,
+                    color: widget.sentByMe ? Colors.white : Colors.black87),
+              ),
             ),
+            onDoubleTap: () {
+              starMessage(widget.message, context);
+            },
           ),
         ],
       );
@@ -194,5 +230,10 @@ class _MessageBubbleState extends State<MessageBubble> {
     }
 
     return time;
+  }
+
+  starMessage(message, context) {
+    FileUtils.saveToFile(message);
+    mySnackBar(context, "message starred !");
   }
 }

@@ -10,7 +10,7 @@ void mySnackBar(context, message) {
           height: 70,
           decoration: BoxDecoration(
             color: Parameters().navbar_IColor,
-            borderRadius: BorderRadius.all(Radius.circular(16)),
+            borderRadius: const BorderRadius.all(Radius.circular(16)),
           ),
           child: Row(
             children: [
@@ -24,7 +24,7 @@ void mySnackBar(context, message) {
                         Icons.info,
                         color: Colors.white,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Padding(

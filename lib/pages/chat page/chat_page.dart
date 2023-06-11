@@ -356,10 +356,6 @@ class _ChatPageState extends State<ChatPage> {
       });
     }
   }
-
-  // chatMessagesCount() {
-  //   if()
-  // }
 }
 
 final ScrollController _controller = ScrollController();
