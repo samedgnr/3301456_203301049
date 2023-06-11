@@ -122,7 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(18, 0, 18, 0),
                       child: TextField(
-                        maxLength: 10,
+                        maxLength: 11,
                         cursorColor: Parameters().appbar_BColor,
                         controller: _numberController,
                         decoration: InputDecoration(

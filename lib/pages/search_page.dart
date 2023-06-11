@@ -1,5 +1,4 @@
 import 'package:chatapp/pages/snack_bar.dart';
-import 'package:chatapp/pages/start%20page/register_page.dart';
 import 'package:chatapp/shared/local_parameters.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

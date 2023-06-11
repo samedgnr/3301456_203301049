@@ -1,5 +1,4 @@
 import 'package:chatapp/pages/bottomnav_bar.dart';
-import 'package:chatapp/pages/settings%20page/settings_body.dart';
 import 'package:chatapp/services/auth_service.dart';
 import 'package:chatapp/shared/local_parameters.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -75,12 +74,12 @@ class _ProfilePageState extends State<ProfilePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 30.0),
+              const Padding(
+                padding: EdgeInsets.only(top: 30.0),
                 child: SizedBox(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage("lib/images/Kedy.jpg"),
