@@ -24,7 +24,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   WeatherService weatherService = WeatherService();
   Weather weather = Weather();
-
   String userName = "";
   String number = "";
   String email = "";
@@ -99,7 +98,7 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(5.0),
             child: Column(
               children: [
-                Text("Ankara"),
+                const Text("Ankara"),
                 Row(
                   children: [
                     Image.network(

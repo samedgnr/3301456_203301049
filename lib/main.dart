@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +43,7 @@ class MyApp extends StatelessWidget {
         ],
       ),
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }

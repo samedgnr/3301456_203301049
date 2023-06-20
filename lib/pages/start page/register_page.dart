@@ -1,9 +1,15 @@
 import 'package:chatapp/helper/helper_function.dart';
+import 'package:chatapp/model/user_model.dart';
 import 'package:chatapp/shared/local_parameters.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:sqflite/sqflite.dart';
 import '../../services/auth_service.dart';
+import '../../services/local_db_service.dart';
 import '../snack_bar.dart';
+
+DbUtils utils = DbUtils();
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -20,6 +26,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   AuthService authService = AuthService();
+  late Future<Database> database;
+  List<User> userList = [];
 
   @override
   void dispose() {
@@ -31,6 +39,37 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    getData();
+  }
+
+  _onPressedAdd() async {
+    final userr = User(
+        name: _nameController.text,
+        number: _numberController.text,
+        email: _emailController.text,
+        password: _passwordController.text);
+    utils.insertUser(userr);
+    userList = await utils.users();
+    //print(userList);
+    getData();
+  }
+
+  void getData() async {
+    await utils.users().then((result) => {
+          setState(() {
+            userList = result;
+          })
+        });
+    print(userList);
+  }
+
   Future signUp() async {
     if (RegExp(r'^(?:[+0][1-9])?[0-9]{10,12}$')
         .hasMatch(_numberController.text)) {
@@ -40,6 +79,15 @@ class _RegisterPageState extends State<RegisterPage> {
         if (_passwordController.text.length >= 8) {
           if (_passwordController.text.trim() ==
               _confirmPasswordController.text.trim()) {
+            _onPressedAdd();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return LoadingAnimationWidget.inkDrop(
+                    color: const Color.fromARGB(255, 214, 90, 49),
+                    size: 50,
+                  );
+                });
             await authService
                 .registerUserWithEmailandPassword(
                     _nameController.text,
