@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   AuthService authService = AuthService();
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   Future signIn() async {
     if (RegExp(

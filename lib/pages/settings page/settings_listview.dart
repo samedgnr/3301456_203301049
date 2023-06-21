@@ -80,7 +80,7 @@ class _SettingsListViewState extends State<SettingsListView> {
                         userName,
                         style: const TextStyle(fontSize: 25),
                       ),
-                      Text(durum, style: TextStyle(fontSize: 12)),
+                      Text(durum, style: const TextStyle(fontSize: 12)),
                     ],
                   ),
                 ],
